@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.user;
 
 import com.xiaomizhou.admin.dept.Department;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class UserService {
         return optional.get();
     }
 
-    public Page<User> page(Map<String, Object> query, Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<User> page(User user, Pageable pageable) {
+        Example<User> example = Example.of(user);
+        return repository.findAll(example, pageable);
     }
 }

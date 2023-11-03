@@ -16,8 +16,9 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public ResponseEntity<Page<UserResponse>> list(Map<String, Object> query, Pageable pageable) {
-        return ResponseEntity.ok(service.page(query, pageable).map(UserConverter.INSTANCES::convertEntity2Resp));
+    public ResponseEntity<Page<UserResponse>> list(UserRequest query, Pageable pageable) {
+        return ResponseEntity.ok(service.page(UserConverter.INSTANCES.converterReq2Entity(query), pageable)
+                .map(UserConverter.INSTANCES::convertEntity2Resp));
     }
 
     @GetMapping("/{id}")
