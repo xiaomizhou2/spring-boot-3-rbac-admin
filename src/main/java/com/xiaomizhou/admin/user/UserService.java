@@ -34,4 +34,13 @@ public class UserService {
         Example<User> example = Example.of(user);
         return repository.findAll(example, pageable);
     }
+
+    public void update(User user) {
+        repository.save(user);
+    }
+
+    public void lock(Integer id) {
+        User user = User.builder().id(id).status((short) 1).build();
+        repository.save(user);
+    }
 }

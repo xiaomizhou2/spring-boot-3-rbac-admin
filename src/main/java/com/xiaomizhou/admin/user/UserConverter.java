@@ -20,4 +20,6 @@ public interface UserConverter {
     User converterReq2Entity(UserRequest request);
 
     UserResponse convertEntity2Resp(User user);
+
+    User converterReq2Entity(ChangeRoleRequest request);
 }

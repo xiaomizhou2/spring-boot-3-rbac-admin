@@ -1,8 +1,10 @@
 package com.xiaomizhou.admin.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.xiaomizhou.admin.dept.Department;
 import com.xiaomizhou.admin.role.Role;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,6 +19,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,12 +57,20 @@ public class User {
 
     private Short status;
 
+    @CreatedBy
+    @Column(updatable = false)
     private String createdUserId;
 
+    @CreatedDate
+    @Column(updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
+    @LastModifiedBy
     private String updatedUserId;
 
+    @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     @ManyToMany
