@@ -1,6 +1,5 @@
-package com.xiaomizhou.admin.permission;
+package com.xiaomizhou.admin.entity;
 
-import com.xiaomizhou.admin.api.Api;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -25,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_permission")
-public class Permission {
+public class PermissionEntity {
     @Id
     private Integer id;
 
@@ -40,5 +39,5 @@ public class Permission {
             joinColumns = @JoinColumn(name = "permission_id"),
             inverseJoinColumns = @JoinColumn(name = "api_id")
     )
-    private Set<Api> apis;
+    private Set<ApiEntity> apiEntities;
 }

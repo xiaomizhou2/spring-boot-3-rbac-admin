@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.dept;
+package com.xiaomizhou.admin.service;
 
+import com.xiaomizhou.admin.entity.DepartmentEntity;
+import com.xiaomizhou.admin.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,17 +19,17 @@ public class DepartmentService {
 
     private final DepartmentRepository repository;
 
-    public Page<Department> list(Department department, Pageable pageable) {
-        Example<Department> example = Example.of(department);
+    public Page<DepartmentEntity> list(DepartmentEntity departmentEntity, Pageable pageable) {
+        Example<DepartmentEntity> example = Example.of(departmentEntity);
         return repository.findAll(example, pageable);
     }
 
-    public Department findById(Integer id) {
+    public DepartmentEntity findById(Integer id) {
         return repository.findById(id).get();
     }
 
-    public void save(Department department) {
-        repository.save(department);
+    public void save(DepartmentEntity departmentEntity) {
+        repository.save(departmentEntity);
     }
 
     public void delete(Integer id) {

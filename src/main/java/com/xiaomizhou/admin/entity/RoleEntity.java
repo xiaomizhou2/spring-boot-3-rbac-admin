@@ -1,6 +1,5 @@
-package com.xiaomizhou.admin.role;
+package com.xiaomizhou.admin.entity;
 
-import com.xiaomizhou.admin.permission.Permission;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -12,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -26,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_role")
-public class Role {
+public class RoleEntity {
     @Id
     private Integer id;
 
@@ -43,5 +41,5 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
-    private Set<Permission> permissions;
+    private Set<PermissionEntity> permissionEntities;
 }

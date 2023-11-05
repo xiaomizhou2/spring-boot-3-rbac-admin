@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.role;
+package com.xiaomizhou.admin.service;
 
+import com.xiaomizhou.admin.entity.RoleEntity;
+import com.xiaomizhou.admin.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,21 +19,21 @@ public class RoleService {
 
     private final RoleRepository repository;
 
-    public Page<Role> list(Role role, Pageable pageable) {
-        Example<Role> example = Example.of(role);
+    public Page<RoleEntity> list(RoleEntity roleEntity, Pageable pageable) {
+        Example<RoleEntity> example = Example.of(roleEntity);
         return repository.findAll(example, pageable);
     }
 
-    public Role findById(Integer id) {
+    public RoleEntity findById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("数据不存在"));
     }
 
-    public void create(Role role) {
-        repository.save(role);
+    public void create(RoleEntity roleEntity) {
+        repository.save(roleEntity);
     }
 
-    public void update(Role role) {
-        repository.save(role);
+    public void update(RoleEntity roleEntity) {
+        repository.save(roleEntity);
     }
 
     public void delete(Integer id) {

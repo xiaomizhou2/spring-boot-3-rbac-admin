@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.permission;
+package com.xiaomizhou.admin.service;
 
+import com.xiaomizhou.admin.entity.PermissionEntity;
+import com.xiaomizhou.admin.repository.PermissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,17 +19,17 @@ public class PermissionService {
 
     private final PermissionRepository repository;
 
-    public Page<Permission> list(Permission permission, Pageable pageable) {
-        Example<Permission> example = Example.of(permission);
+    public Page<PermissionEntity> list(PermissionEntity permissionEntity, Pageable pageable) {
+        Example<PermissionEntity> example = Example.of(permissionEntity);
         return repository.findAll(example, pageable);
     }
 
-    public Permission findById(Integer id) {
+    public PermissionEntity findById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("数据不存在"));
     }
 
-    public void save(Permission permission) {
-        repository.save(permission);
+    public void save(PermissionEntity permissionEntity) {
+        repository.save(permissionEntity);
     }
 
     public void delete(Integer id) {

@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.api;
+package com.xiaomizhou.admin.service;
 
+import com.xiaomizhou.admin.entity.ApiEntity;
+import com.xiaomizhou.admin.repository.ApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,17 +19,17 @@ public class ApiService {
 
     private final ApiRepository repository;
 
-    public Page<Api> list(Api api, Pageable pageable) {
-        Example<Api> example = Example.of(api);
+    public Page<ApiEntity> list(ApiEntity apiEntity, Pageable pageable) {
+        Example<ApiEntity> example = Example.of(apiEntity);
         return repository.findAll(example, pageable);
     }
 
-    public Api findById(Integer id) {
+    public ApiEntity findById(Integer id) {
         return repository.findById(id).get();
     }
 
-    public void save(Api api) {
-        repository.save(api);
+    public void save(ApiEntity apiEntity) {
+        repository.save(apiEntity);
     }
 
     public void delete(Integer id) {

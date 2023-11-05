@@ -1,8 +1,6 @@
-package com.xiaomizhou.admin.user;
+package com.xiaomizhou.admin.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.xiaomizhou.admin.dept.Department;
-import com.xiaomizhou.admin.role.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,8 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +30,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue
     private Integer id;
@@ -45,7 +41,7 @@ public class User {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "dept_id")
-    private Department department;
+    private DepartmentEntity departmentEntity;
 
     private String name;
 
@@ -78,5 +74,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<RoleEntity> roleEntities;
 }

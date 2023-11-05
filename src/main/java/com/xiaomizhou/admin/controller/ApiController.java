@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.role;
+package com.xiaomizhou.admin.controller;
 
+import com.xiaomizhou.admin.entity.ApiEntity;
+import com.xiaomizhou.admin.service.ApiService;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,39 +21,32 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/apis")
 @RequiredArgsConstructor
-public class RoleController {
+public class ApiController {
 
-    private final RoleService service;
+    private final ApiService service;
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<Role>> list(Role role, Pageable pageable) {
-        return ResponseEntity.ok(service.list(role, pageable));
+    public ResponseEntity<Page<ApiEntity>> list(ApiEntity apiEntity, Pageable pageable) {
+        return ResponseEntity.ok(service.list(apiEntity, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<ApiEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Role role) {
-        service.create(role);
+    public ResponseEntity<?> save(@RequestBody ApiEntity apiEntity) {
+        service.save(apiEntity);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody Role role) {
-        service.update(role);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
-
 }

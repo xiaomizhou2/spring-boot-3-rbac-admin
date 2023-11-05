@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.permission;
+package com.xiaomizhou.admin.controller;
 
+import com.xiaomizhou.admin.entity.PermissionEntity;
+import com.xiaomizhou.admin.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -27,18 +29,18 @@ public class PermissionController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<Permission>> list(Permission permission, Pageable pageable) {
-        return ResponseEntity.ok(service.list(permission, pageable));
+    public ResponseEntity<Page<PermissionEntity>> list(PermissionEntity permissionEntity, Pageable pageable) {
+        return ResponseEntity.ok(service.list(permissionEntity, pageable));
     }
 
     @GetMapping("/id")
-    public ResponseEntity<Permission> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<PermissionEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Permission permission) {
-        service.save(permission);
+    public ResponseEntity<?> save(@RequestBody PermissionEntity permissionEntity) {
+        service.save(permissionEntity);
         return ResponseEntity.ok().build();
     }
 

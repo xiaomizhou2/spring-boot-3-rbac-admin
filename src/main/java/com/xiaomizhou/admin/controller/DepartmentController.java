@@ -1,5 +1,7 @@
-package com.xiaomizhou.admin.dept;
+package com.xiaomizhou.admin.controller;
 
+import com.xiaomizhou.admin.entity.DepartmentEntity;
+import com.xiaomizhou.admin.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -27,18 +29,18 @@ public class DepartmentController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<Department>> list(Department department, Pageable pageable) {
-        return ResponseEntity.ok(service.list(department, pageable));
+    public ResponseEntity<Page<DepartmentEntity>> list(DepartmentEntity departmentEntity, Pageable pageable) {
+        return ResponseEntity.ok(service.list(departmentEntity, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<DepartmentEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Department department) {
-        service.save(department);
+    public ResponseEntity<?> save(@RequestBody DepartmentEntity departmentEntity) {
+        service.save(departmentEntity);
         return ResponseEntity.ok().build();
     }
 

@@ -1,4 +1,4 @@
-package com.xiaomizhou.admin.dept;
+package com.xiaomizhou.admin.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,14 +18,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "t_department")
-public class Department {
+@Table(name = "t_api")
+public class ApiEntity {
     @Id
     private Integer id;
 
     private String code;
 
     private String name;
+
+    private String url;
+
+    private String method;
 
     private Short orderNo;
 }
