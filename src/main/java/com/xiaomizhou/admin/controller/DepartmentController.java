@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.controller;
 
 import com.xiaomizhou.admin.entity.DepartmentEntity;
 import com.xiaomizhou.admin.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/api/departments")
+@RequestMapping("/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
 
@@ -39,7 +40,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody DepartmentEntity departmentEntity) {
+    public ResponseEntity<?> save(@Valid @RequestBody DepartmentEntity departmentEntity) {
         service.save(departmentEntity);
         return ResponseEntity.ok().build();
     }

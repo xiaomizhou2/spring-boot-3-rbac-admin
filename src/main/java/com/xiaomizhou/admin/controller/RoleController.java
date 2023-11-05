@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.controller;
 
 import com.xiaomizhou.admin.entity.RoleEntity;
 import com.xiaomizhou.admin.service.RoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/roles")
 @RequiredArgsConstructor
 public class RoleController {
 
@@ -40,13 +41,13 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody RoleEntity roleEntity) {
+    public ResponseEntity<?> create(@Valid @RequestBody RoleEntity roleEntity) {
         service.create(roleEntity);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody RoleEntity roleEntity) {
+    public ResponseEntity<?> update(@Valid @RequestBody RoleEntity roleEntity) {
         service.update(roleEntity);
         return ResponseEntity.ok().build();
     }

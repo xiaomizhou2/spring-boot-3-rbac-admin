@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.service;
 
 import com.xiaomizhou.admin.entity.UserEntity;
 import com.xiaomizhou.admin.repository.UserRepository;
+import com.xiaomizhou.admin.service.validation.NotConflictUser;
+import com.xiaomizhou.admin.service.validation.UniqueUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -26,11 +28,15 @@ public class UserService {
         return repository.findAll(example, pageable);
     }
 
-    public void save(UserEntity user) {
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
+
+    public void create(@UniqueUser UserEntity user) {
         repository.save(user);
     }
 
-    public void delete(Integer id) {
-        repository.deleteById(id);
+    public void update(@NotConflictUser UserEntity user) {
+        repository.save(user);
     }
 }

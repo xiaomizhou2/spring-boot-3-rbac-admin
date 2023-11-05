@@ -1,6 +1,7 @@
 package com.xiaomizhou.admin.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,8 +38,11 @@ public class UserEntity {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "用户名不允许为空")
     private String username;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(updatable = false)
     private String password;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
@@ -49,6 +55,7 @@ public class UserEntity {
 
     private LocalDate birthday;
 
+    @Email(message = "邮箱格式不正确")
     private String email;
 
     private Short status;

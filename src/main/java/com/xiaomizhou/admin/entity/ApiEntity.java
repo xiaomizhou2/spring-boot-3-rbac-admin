@@ -3,6 +3,8 @@ package com.xiaomizhou.admin.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +25,16 @@ public class ApiEntity {
     @Id
     private Integer id;
 
+    @NotEmpty(message = "接口编码不允许为空")
     private String code;
 
+    @NotEmpty(message = "接口描述不允许为空")
     private String name;
 
+    @NotEmpty(message = "url不允许为空")
     private String url;
 
+    @NotBlank(message = "请求方式不允许为空")
     private String method;
 
     private Short orderNo;

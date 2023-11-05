@@ -6,6 +6,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,8 +29,10 @@ public class RoleEntity {
     @Id
     private Integer id;
 
+    @NotEmpty(message = "角色编号不允许为空")
     private String code;
 
+    @NotEmpty(message = "角色名称不允许为空")
     private String name;
 
     private Short status;

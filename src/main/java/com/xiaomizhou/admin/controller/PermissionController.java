@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.controller;
 
 import com.xiaomizhou.admin.entity.PermissionEntity;
 import com.xiaomizhou.admin.service.PermissionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/api/permissions")
+@RequestMapping("/permissions")
 @RequiredArgsConstructor
 public class PermissionController {
 
@@ -39,7 +40,7 @@ public class PermissionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody PermissionEntity permissionEntity) {
+    public ResponseEntity<?> save(@Valid @RequestBody PermissionEntity permissionEntity) {
         service.save(permissionEntity);
         return ResponseEntity.ok().build();
     }

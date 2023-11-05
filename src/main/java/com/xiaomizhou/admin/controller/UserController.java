@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.controller;
 
 import com.xiaomizhou.admin.entity.UserEntity;
 import com.xiaomizhou.admin.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody UserEntity user) {
-        service.save(user);
+    public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
+        service.create(user);
         return ResponseEntity.ok().build();
     }
 
