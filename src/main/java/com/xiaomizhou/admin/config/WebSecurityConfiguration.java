@@ -1,14 +1,18 @@
 package com.xiaomizhou.admin.config;
 
+import com.xiaomizhou.admin.auth.JwtAuthenticationHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.io.PrintWriter;
 
 /**
  * @author zhangyaxi
@@ -18,7 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+@EnableMethodSecurity
+public class WebSecurityConfiguration {
 
     private static final String[] WHITE_URL_LIST = {
             "/v2/api-docs",
@@ -32,6 +37,7 @@ public class SecurityConfiguration {
     };
 
     private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationHandler jwtAuthenticationHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,8 +48,10 @@ public class SecurityConfiguration {
                                 .anyRequest().authenticated())
                 //设置session永远不会创建
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider);
+                .authenticationProvider(authenticationProvider)
+                .formLogin(login -> login.successHandler(jwtAuthenticationHandler));
 
         return http.build();
     }
+
 }

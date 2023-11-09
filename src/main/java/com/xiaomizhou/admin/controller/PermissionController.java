@@ -34,7 +34,7 @@ public class PermissionController {
         return ResponseEntity.ok(service.list(permissionEntity, pageable));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<PermissionEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
@@ -45,7 +45,7 @@ public class PermissionController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         service.delete(id);
         return ResponseEntity.ok().build();

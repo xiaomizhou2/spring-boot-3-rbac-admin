@@ -2,6 +2,10 @@ package com.xiaomizhou.admin.controller;
 
 import com.xiaomizhou.admin.entity.UserEntity;
 import com.xiaomizhou.admin.service.UserService;
+import com.xiaomizhou.admin.service.validation.NotConflictUser;
+import com.xiaomizhou.admin.service.validation.UniqueUser;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Tag(name = "UserController", description = "用户管理")
 public class UserController {
 
     private final UserService service;
@@ -28,9 +33,15 @@ public class UserController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
+    @PutMapping
+    public ResponseEntity<?> create(@Valid @UniqueUser @RequestBody UserEntity user) {
         service.create(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> update(@Valid @NotConflictUser @RequestBody UserEntity user) {
+        service.update(user);
         return ResponseEntity.ok().build();
     }
 

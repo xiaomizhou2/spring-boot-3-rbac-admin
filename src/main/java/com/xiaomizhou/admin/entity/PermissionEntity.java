@@ -42,5 +42,5 @@ public class PermissionEntity {
             joinColumns = @JoinColumn(name = "permission_id"),
             inverseJoinColumns = @JoinColumn(name = "api_id")
     )
-    private Set<ApiEntity> apiEntities;
+    private Set<ApiEntity> apis;
 }
