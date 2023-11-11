@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,15 +18,7 @@ import java.util.Collection;
  * @date 2023/11/9
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AuthenticationUser extends UserEntity implements UserDetails {
-
-    public AuthenticationUser(UserEntity entity) {
-        this();
-        BeanUtils.copyProperties(entity, this);
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

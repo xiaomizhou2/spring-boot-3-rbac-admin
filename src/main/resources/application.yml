@@ -7,3 +7,9 @@ spring:
     url: jdbc:mysql://82.157.166.179/db-xiaomizhou-admin
     username: root
     password: Zyx123
+  jpa:
+    database: mysql
+
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
