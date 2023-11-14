@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.domain.permission;
 
 import com.xiaomizhou.admin.domain.api.ApiEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -28,6 +30,7 @@ import java.util.Set;
 @Table(name = "t_permission")
 public class PermissionEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "菜单编号不允许为空")

@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -28,8 +30,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String SPRING_SECURITY_AUTH_HEADER_KEY = "Authorization";
     public static final String SPRING_SECURITY_AUTH_PREFIX_KEY = "Bearer ";
     private final AuthenticationService authenticationService;
-    private String usernameParameter = "username";
-    private String passwordParameter = "password";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -38,10 +38,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-
         token = token.substring(SPRING_SECURITY_AUTH_PREFIX_KEY.length());
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            log.info("准备放入用户信息");
+        if (SecurityContextHolder.getContext().getAuthentication() == null && authenticationService.authenticateToken(token)) {
+            //加载用户权限信息
+
         }
+        chain.doFilter(request, response);
     }
 }

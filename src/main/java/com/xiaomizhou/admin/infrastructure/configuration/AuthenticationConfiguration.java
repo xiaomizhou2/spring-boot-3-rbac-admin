@@ -1,7 +1,7 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
-import com.xiaomizhou.admin.domain.auth.AuthenticationUserDetailService;
-import com.xiaomizhou.admin.domain.auth.AuthenticationUserRepository;
+import com.xiaomizhou.admin.domain.auth.authorization.AuthorizationUserService;
+import com.xiaomizhou.admin.domain.auth.authorization.AuthorizationUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AuthenticationConfiguration {
 
-    private final AuthenticationUserRepository repository;
+    private final AuthorizationUserRepository repository;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -33,7 +33,7 @@ public class AuthenticationConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new AuthenticationUserDetailService(repository);
+        return new AuthorizationUserService(repository);
     }
 
     @Bean

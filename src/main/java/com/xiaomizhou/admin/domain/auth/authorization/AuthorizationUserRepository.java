@@ -1,4 +1,4 @@
-package com.xiaomizhou.admin.domain.auth;
+package com.xiaomizhou.admin.domain.auth.authorization;
 
 import com.xiaomizhou.admin.domain.user.UserEntity;
 import com.xiaomizhou.admin.domain.user.UserRepository;
@@ -14,13 +14,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class AuthenticationUserRepository {
+public class AuthorizationUserRepository {
     private final UserRepository repository;
 
-    public AuthenticationUser findByUsername(String username) {
+
+    public AuthorizationUserInfo findByUsername(String username) {
         UserEntity user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
-        AuthenticationUser authenticationUser = new AuthenticationUser();
-        BeanUtils.copyProperties(user, authenticationUser);
-        return authenticationUser;
+        AuthorizationUserInfo authorizationUserInfo = new AuthorizationUserInfo();
+        BeanUtils.copyProperties(user, authorizationUserInfo);
+        return authorizationUserInfo;
     }
 }

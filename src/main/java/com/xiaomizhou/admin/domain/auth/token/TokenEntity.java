@@ -1,4 +1,4 @@
-package com.xiaomizhou.admin.domain.auth;
+package com.xiaomizhou.admin.domain.auth.token;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -24,7 +23,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_authorization")
-public class AuthenticationEntity {
+public class TokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,6 +43,4 @@ public class AuthenticationEntity {
     private Date refreshTokenIssued;
 
     private Date refreshTokenExpires;
-
-    private Boolean deleted;
 }

@@ -3,6 +3,7 @@ package com.xiaomizhou.admin.domain.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaomizhou.admin.domain.department.DepartmentEntity;
+import com.xiaomizhou.admin.domain.role.RoleEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -25,6 +28,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -35,7 +39,7 @@ import java.time.LocalDateTime;
 @Schema(name = "user", title = "用户实体")
 public class UserEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(title = "用户ID")
     private Integer id;
 
@@ -63,13 +67,13 @@ public class UserEntity implements Serializable {
     @Schema(title = "用户所属部门")
     private DepartmentEntity department;
 
-//    @ManyToMany
-//    @JoinTable(name = "t_user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//    @Schema(title = "用户角色列表")
-//    private Set<RoleEntity> roles;
+    @ManyToMany
+    @JoinTable(name = "t_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @Schema(title = "用户角色列表")
+    private Set<RoleEntity> roles;
 
     @CreatedBy
     @Column(updatable = false)

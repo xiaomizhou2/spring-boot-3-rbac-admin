@@ -1,7 +1,7 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
 import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationFilter;
-import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationHandler;
+import com.xiaomizhou.admin.domain.auth.handler.LoginSuccessAuthenticationHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
-public class WebSecurityConfiguration {
+public class SecurityConfiguration {
 
     private static final String[] WHITE_URL_LIST = {
             "/v2/api-docs",
@@ -37,7 +37,7 @@ public class WebSecurityConfiguration {
     };
 
     private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthenticationHandler jwtAuthenticationHandler;
+    private final LoginSuccessAuthenticationHandler loginSuccessAuthenticationHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -51,7 +51,7 @@ public class WebSecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin(login -> login.successHandler(jwtAuthenticationHandler));
+                .formLogin(login -> login.successHandler(loginSuccessAuthenticationHandler));
 
         return http.build();
     }

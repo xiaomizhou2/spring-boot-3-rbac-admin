@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.domain.role;
 
 import com.xiaomizhou.admin.domain.permission.PermissionEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -28,6 +30,7 @@ import java.util.Set;
 @Table(name = "t_role")
 public class RoleEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "角色编号不允许为空")

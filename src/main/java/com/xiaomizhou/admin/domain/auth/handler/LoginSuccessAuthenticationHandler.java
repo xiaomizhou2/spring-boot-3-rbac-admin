@@ -1,8 +1,7 @@
-package com.xiaomizhou.admin.domain.auth.jwt;
+package com.xiaomizhou.admin.domain.auth.handler;
 
 import com.xiaomizhou.admin.domain.auth.AuthenticationResponse;
 import com.xiaomizhou.admin.domain.auth.AuthenticationService;
-import com.xiaomizhou.admin.domain.user.UserEntity;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +25,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessAuthenticationHandler implements AuthenticationSuccessHandler {
     private final AuthenticationService authenticationService;
     private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
 
