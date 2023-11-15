@@ -1,27 +1,24 @@
-package com.xiaomizhou.admin.domain.auth;
+package com.xiaomizhou.admin.domain.auth.jwt;
 
-import com.xiaomizhou.admin.domain.auth.jwt.JwtService;
+import com.xiaomizhou.admin.domain.auth.AuthenticationResponse;
 import com.xiaomizhou.admin.domain.auth.token.TokenEntity;
 import com.xiaomizhou.admin.domain.auth.token.TokenRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.function.Function;
 
 /**
- * 认证服务
- *
  * @author zhangyaxi
  * @email 521jx123@gmail.com
- * @date 2023/11/7
+ * @date 2023/11/15
  */
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class AuthenticationService {
-    private final JwtService jwtService;
+public class JwtAuthenticationService {
+    private final JwtRepository jwtRepository;
     private final TokenRepository repository;
 
     /**
@@ -30,9 +27,9 @@ public class AuthenticationService {
      * @param username
      * @return 认证Response
      */
-    public AuthenticationResponse authenticate(String username) {
-        String accessToken = jwtService.generateToken(username);
-        String refreshToken = jwtService.generateRefreshToken(username);
+    public AuthenticationResponse issued(String username) {
+        String accessToken = jwtRepository.generateToken(username);
+        String refreshToken = jwtRepository.generateRefreshToken(username);
         saveAuthenticationToken(username, accessToken, refreshToken);
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
@@ -48,15 +45,27 @@ public class AuthenticationService {
      */
     public boolean authenticateToken(String accessToken) {
         TokenEntity tokenEntity = repository.findAuthenticationEntityByAccessToken(accessToken);
-        Date expiration = jwtService.extractClaim(accessToken, Claims::getExpiration);
+        Date expiration = jwtRepository.extractClaim(accessToken, Claims::getExpiration);
         return tokenEntity != null && expiration.after(new Date());
     }
 
+    /**
+     * 提取相应的内容
+     *
+     * @param token
+     * @param claimsResolver
+     * @param <T>
+     * @return 内容
+     */
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        return jwtRepository.extractClaim(token, claimsResolver);
+    }
+
     private void saveAuthenticationToken(String username, String accessToken, String refreshToken) {
-        Date accessTokenIssued = jwtService.extractClaim(accessToken, Claims::getIssuedAt);
-        Date accessTokenExpires = jwtService.extractClaim(accessToken, Claims::getExpiration);
-        Date refreshTokenIssued = jwtService.extractClaim(refreshToken, Claims::getIssuedAt);
-        Date refreshTokenExpires = jwtService.extractClaim(refreshToken, Claims::getExpiration);
+        Date accessTokenIssued = jwtRepository.extractClaim(accessToken, Claims::getIssuedAt);
+        Date accessTokenExpires = jwtRepository.extractClaim(accessToken, Claims::getExpiration);
+        Date refreshTokenIssued = jwtRepository.extractClaim(refreshToken, Claims::getIssuedAt);
+        Date refreshTokenExpires = jwtRepository.extractClaim(refreshToken, Claims::getExpiration);
         TokenEntity authentication = TokenEntity.builder()
                 .accessToken(accessToken)
                 .accessTokenIssued(accessTokenIssued)
@@ -68,4 +77,5 @@ public class AuthenticationService {
                 .build();
         repository.save(authentication);
     }
+
 }

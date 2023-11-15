@@ -1,6 +1,7 @@
 package com.xiaomizhou.admin.domain.auth.jwt;
 
-import com.xiaomizhou.admin.domain.auth.AuthenticationService;
+import com.xiaomizhou.admin.domain.auth.AuthenticationDetailService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,14 +21,15 @@ import java.io.IOException;
  * @email 521jx123@gmail.com
  * @date 2023/11/8
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    public static final String SPRING_SECURITY_AUTH_HEADER_KEY = "Authorization";
-    public static final String SPRING_SECURITY_AUTH_PREFIX_KEY = "Bearer ";
-    private final AuthenticationService authenticationService;
+    private static final String SPRING_SECURITY_AUTH_HEADER_KEY = "Authorization";
+    private static final String SPRING_SECURITY_AUTH_PREFIX_KEY = "Bearer ";
+    private final JwtAuthenticationService jwtAuthenticationService;
+    private final AuthenticationDetailService authenticationDetailService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -39,9 +39,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         token = token.substring(SPRING_SECURITY_AUTH_PREFIX_KEY.length());
-        if (SecurityContextHolder.getContext().getAuthentication() == null && authenticationService.authenticateToken(token)) {
+        if (SecurityContextHolder.getContext().getAuthentication() == null && jwtAuthenticationService.authenticateToken(token)) {
             //加载用户权限信息
-
+            String username = jwtAuthenticationService.extractClaim(token, Claims::getSubject);
+            UserDetails userDetails = authenticationDetailService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
         chain.doFilter(request, response);
     }

@@ -1,6 +1,5 @@
 package com.xiaomizhou.admin.domain.api;
 
-import com.xiaomizhou.admin.domain.api.ApiEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

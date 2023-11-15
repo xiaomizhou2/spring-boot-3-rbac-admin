@@ -1,7 +1,7 @@
 package com.xiaomizhou.admin.domain.auth.handler;
 
 import com.xiaomizhou.admin.domain.auth.AuthenticationResponse;
-import com.xiaomizhou.admin.domain.auth.AuthenticationService;
+import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,13 +26,13 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessAuthenticationHandler implements AuthenticationSuccessHandler {
-    private final AuthenticationService authenticationService;
+    private final JwtAuthenticationService jwtAuthenticationService;
     private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String username = authentication.getName();
-        AuthenticationResponse authenticationResponse = authenticationService.authenticate(username);
+        AuthenticationResponse authenticationResponse = jwtAuthenticationService.issued(username);
         log.info("登录成功，返回令牌信息:{}", authenticationResponse);
         if (authenticationResponse != null) {
             //将令牌信息返回

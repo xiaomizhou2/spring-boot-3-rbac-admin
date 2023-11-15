@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -21,9 +22,9 @@ import java.util.function.Function;
  * @date 2023/11/8
  */
 @Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
-public class JwtService {
+public class JwtRepository {
     private final JwtProperties jwtProperties;
 
     public String generateToken(String username) {
