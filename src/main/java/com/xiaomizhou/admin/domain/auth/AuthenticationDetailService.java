@@ -33,14 +33,18 @@ public class AuthenticationDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("用户" + username + "不存在"));
         Set<PermissionEntity> permissions = new HashSet<>();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (RoleEntity role : user.getRoles()) {
-            permissions.addAll(role.getPermissions());
-            for (PermissionEntity permission : permissions) {
-                authorities = permission.getApis().stream()
-                        .map(ApiEntity::getCode)
-                        .distinct()
-                        .map(code -> new SimpleGrantedAuthority(code))
-                        .collect(Collectors.toList());
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+            for (RoleEntity role : user.getRoles()) {
+                if (role.getPermissions() != null && role.getPermissions().isEmpty()) {
+                    permissions.addAll(role.getPermissions());
+                    for (PermissionEntity permission : permissions) {
+                        authorities = permission.getApis().stream()
+                                .map(ApiEntity::getCode)
+                                .distinct()
+                                .map(code -> new SimpleGrantedAuthority(code))
+                                .collect(Collectors.toList());
+                    }
+                }
             }
         }
         UserInfo userInfo = new UserInfo(user, authorities, permissions);

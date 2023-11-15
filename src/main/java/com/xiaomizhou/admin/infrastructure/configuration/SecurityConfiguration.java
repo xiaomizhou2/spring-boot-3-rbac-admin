@@ -1,5 +1,6 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
+import com.xiaomizhou.admin.domain.auth.handler.LoginFailureAuthenticationHandler;
 import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationFilter;
 import com.xiaomizhou.admin.domain.auth.handler.LoginSuccessAuthenticationHandler;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,13 @@ public class SecurityConfiguration {
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/error"
     };
 
     private final AuthenticationProvider authenticationProvider;
     private final LoginSuccessAuthenticationHandler loginSuccessAuthenticationHandler;
+    private final LoginFailureAuthenticationHandler loginFailureAuthenticationHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -51,7 +54,10 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin(login -> login.successHandler(loginSuccessAuthenticationHandler));
+                .formLogin(login -> {
+                    login.successHandler(loginSuccessAuthenticationHandler);
+                    login.failureHandler(loginFailureAuthenticationHandler);
+                });
 
         return http.build();
     }

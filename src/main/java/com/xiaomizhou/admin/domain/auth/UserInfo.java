@@ -3,6 +3,7 @@ package com.xiaomizhou.admin.domain.auth;
 import com.xiaomizhou.admin.domain.permission.PermissionEntity;
 import com.xiaomizhou.admin.domain.user.UserEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import java.util.Set;
  * @date 2023/11/14
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class UserInfo extends UserEntity implements UserDetails {
 
     private Collection<GrantedAuthority> authorities;
@@ -35,21 +37,21 @@ public class UserInfo extends UserEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
