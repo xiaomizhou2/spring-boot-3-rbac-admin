@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.api.ApiEntity;
 import com.xiaomizhou.admin.application.ApiService;
+import com.xiaomizhou.admin.interfaces.vo.ApiQueryVo;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -30,8 +32,8 @@ public class ApiController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<ApiEntity>> list(ApiEntity apiEntity, Pageable pageable) {
-        return ResponseEntity.ok(service.list(apiEntity, pageable));
+    public ResponseEntity<Page<ApiEntity>> list(ApiQueryVo query, @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(service.list(query, pageable));
     }
 
     @GetMapping("/{id}")

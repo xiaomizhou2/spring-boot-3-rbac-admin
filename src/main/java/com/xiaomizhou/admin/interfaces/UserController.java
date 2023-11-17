@@ -4,6 +4,8 @@ import com.xiaomizhou.admin.domain.user.UserEntity;
 import com.xiaomizhou.admin.application.UserService;
 import com.xiaomizhou.admin.domain.user.validation.NotConflictUser;
 import com.xiaomizhou.admin.domain.user.validation.UniqueUser;
+import com.xiaomizhou.admin.interfaces.vo.UserQueryVo;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ public class UserController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<UserEntity>> list(UserEntity query, Pageable pageable) {
+    public ResponseEntity<Page<UserEntity>> list(UserQueryVo query, @Parameter(hidden = true) Pageable pageable) {
         return ResponseEntity.ok(service.page(query, pageable));
     }
 

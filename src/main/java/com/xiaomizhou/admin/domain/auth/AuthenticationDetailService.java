@@ -35,7 +35,7 @@ public class AuthenticationDetailService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             for (RoleEntity role : user.getRoles()) {
-                if (role.getPermissions() != null && role.getPermissions().isEmpty()) {
+                if (role.getPermissions() != null && !role.getPermissions().isEmpty()) {
                     permissions.addAll(role.getPermissions());
                     for (PermissionEntity permission : permissions) {
                         authorities = permission.getApis().stream()

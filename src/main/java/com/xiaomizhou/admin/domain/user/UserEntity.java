@@ -32,10 +32,10 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "t_user")
 @Schema(name = "user", title = "用户实体")
 public class UserEntity implements Serializable {

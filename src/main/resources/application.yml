@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1/db-xiaomizhou-admin
+    url: jdbc:mysql://82.157.166.179/db-xiaomizhou-admin
     username: root
-    password: 123456
+    password: Zyx123
   jpa:
     database: mysql
 
