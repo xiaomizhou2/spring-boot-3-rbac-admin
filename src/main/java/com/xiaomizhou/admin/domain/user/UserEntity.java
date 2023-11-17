@@ -75,20 +75,4 @@ public class UserEntity implements Serializable {
     )
     @Schema(title = "用户角色列表")
     private Set<RoleEntity> roles;
-
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdUserId;
-
-    @CreatedDate
-    @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdTime;
-
-    @LastModifiedBy
-    private String updatedUserId;
-
-    @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
 }
