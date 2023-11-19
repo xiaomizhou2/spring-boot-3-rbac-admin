@@ -25,7 +25,8 @@ public class UserController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<UserEntity>> list(UserQueryVo query, @Parameter(hidden = true) Pageable pageable) {
+    public ResponseEntity<Page<UserEntity>> list(UserQueryVo query,
+                                                 @Parameter(hidden = true) Pageable pageable) {
         return ResponseEntity.ok(service.page(query, pageable));
     }
 

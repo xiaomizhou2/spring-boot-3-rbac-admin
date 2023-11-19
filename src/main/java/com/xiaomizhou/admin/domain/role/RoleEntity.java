@@ -33,15 +33,11 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @NotEmpty(message = "角色编号不允许为空")
     private String code;
-
     @NotEmpty(message = "角色名称不允许为空")
     private String name;
-
     private Short status;
-
     private Short orderNo;
 
     @ManyToMany(fetch = FetchType.EAGER)

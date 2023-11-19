@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.department.DepartmentEntity;
 import com.xiaomizhou.admin.application.DepartmentService;
+import com.xiaomizhou.admin.interfaces.vo.DepartmentQueryVo;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -30,8 +32,9 @@ public class DepartmentController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<DepartmentEntity>> list(DepartmentEntity departmentEntity, Pageable pageable) {
-        return ResponseEntity.ok(service.list(departmentEntity, pageable));
+    public ResponseEntity<Page<DepartmentEntity>> list(DepartmentQueryVo query,
+                                                       @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(service.list(query, pageable));
     }
 
     @GetMapping("/{id}")

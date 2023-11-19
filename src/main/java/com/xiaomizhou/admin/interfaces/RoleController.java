@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.role.RoleEntity;
 import com.xiaomizhou.admin.application.RoleService;
+import com.xiaomizhou.admin.interfaces.vo.RoleQueryVo;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -31,8 +33,9 @@ public class RoleController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<RoleEntity>> list(RoleEntity roleEntity, Pageable pageable) {
-        return ResponseEntity.ok(service.list(roleEntity, pageable));
+    public ResponseEntity<Page<RoleEntity>> list(RoleQueryVo query,
+                                                 @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(service.list(query, pageable));
     }
 
     @GetMapping("/{id}")

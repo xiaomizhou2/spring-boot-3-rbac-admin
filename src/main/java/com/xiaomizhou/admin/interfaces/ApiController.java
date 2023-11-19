@@ -32,7 +32,8 @@ public class ApiController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<ApiEntity>> list(ApiQueryVo query, @Parameter(hidden = true) Pageable pageable) {
+    public ResponseEntity<Page<ApiEntity>> list(ApiQueryVo query,
+                                                @Parameter(hidden = true) Pageable pageable) {
         return ResponseEntity.ok(service.list(query, pageable));
     }
 

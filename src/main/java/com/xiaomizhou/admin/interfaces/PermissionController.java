@@ -2,6 +2,7 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.permission.PermissionEntity;
 import com.xiaomizhou.admin.application.PermissionService;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -30,7 +31,8 @@ public class PermissionController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<PermissionEntity>> list(PermissionEntity permissionEntity, Pageable pageable) {
+    public ResponseEntity<Page<PermissionEntity>> list(PermissionEntity permissionEntity,
+                                                       @Parameter(hidden = true) Pageable pageable) {
         return ResponseEntity.ok(service.list(permissionEntity, pageable));
     }
 
