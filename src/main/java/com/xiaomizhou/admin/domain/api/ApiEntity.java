@@ -1,6 +1,8 @@
 package com.xiaomizhou.admin.domain.api;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_api")
 public class ApiEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "接口编码不允许为空")
