@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_department")
-public class DepartmentEntity {
+public class DepartmentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

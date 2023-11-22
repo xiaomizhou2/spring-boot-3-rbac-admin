@@ -6,6 +6,7 @@ import com.xiaomizhou.admin.domain.role.RoleEntity;
 import com.xiaomizhou.admin.domain.user.UserEntity;
 import com.xiaomizhou.admin.domain.user.UserRepository;
 import jakarta.annotation.Resource;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ public class AuthenticationDetailService implements UserDetailsService {
     @Resource
     private UserRepository repository;
 
+    @Cacheable(key = "#username", cacheNames = "authentication:user")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = repository.findByUsername(username)

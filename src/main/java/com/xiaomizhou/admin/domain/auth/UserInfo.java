@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class UserInfo extends UserEntity implements UserDetails {
+public class UserInfo extends UserEntity implements UserDetails, Serializable {
 
     private Collection<GrantedAuthority> authorities;
 

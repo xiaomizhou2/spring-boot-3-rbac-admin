@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_role")
-public class RoleEntity {
+public class RoleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
