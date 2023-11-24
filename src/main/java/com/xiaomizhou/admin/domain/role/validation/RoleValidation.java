@@ -36,7 +36,7 @@ public class RoleValidation<T extends Annotation> implements ConstraintValidator
         @Override
         public void initialize(NotConflictRole constraintAnnotation) {
             predicate = c -> {
-                List<RoleEntity> list = repository.findByCodeOrEmail(c.getCode(), c.getName());
+                List<RoleEntity> list = repository.findByCodeOrName(c.getCode(), c.getName());
                 return list.isEmpty() || (list.size() == 1 && list.get(0).getId().equals(c.getId()));
             };
         }

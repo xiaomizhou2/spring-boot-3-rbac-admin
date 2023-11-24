@@ -14,5 +14,5 @@ public interface RoleRepository extends JpaRepository<RoleEntity, Integer> {
 
     boolean existsByCodeOrName(String code, String name);
 
-    List<RoleEntity> findByCodeOrEmail(String code, String email);
+    List<RoleEntity> findByCodeOrName(String code, String name);
 }
