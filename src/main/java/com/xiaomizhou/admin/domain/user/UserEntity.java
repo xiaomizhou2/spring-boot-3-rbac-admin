@@ -41,31 +41,29 @@ import java.util.Set;
 public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(title = "用户ID")
     private Integer id;
 
     @NotEmpty(message = "用户名不允许为空")
-    @Schema(title = "用户名")
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(updatable = false)
-    @Schema(title = "密码")
     private String password;
 
-    @Schema(title = "姓名")
     private String name;
 
     @Email(message = "邮箱格式不正确")
-    @Schema(title = "邮箱")
     private String email;
 
-    @Schema(title = "用户状态")
+    private String telephone;
+
+    /**
+     * 用户状态 0-正常，1-禁用
+     */
     private Short status;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "dept_id")
-    @Schema(title = "用户所属部门")
     private DepartmentEntity department;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -73,6 +71,5 @@ public class UserEntity implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @Schema(title = "用户角色列表")
     private Set<RoleEntity> roles;
 }

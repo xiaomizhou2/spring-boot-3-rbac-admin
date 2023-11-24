@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.role.RoleEntity;
 import com.xiaomizhou.admin.application.RoleService;
+import com.xiaomizhou.admin.domain.role.validation.NotConflictRole;
+import com.xiaomizhou.admin.domain.role.validation.UniqueRole;
 import com.xiaomizhou.admin.interfaces.vo.RoleQueryVo;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -44,14 +46,14 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody RoleEntity roleEntity) {
-        service.create(roleEntity);
+    public ResponseEntity<?> create(@Valid @UniqueRole @RequestBody RoleEntity roleEntity) {
+        service.save(roleEntity);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody RoleEntity roleEntity) {
-        service.update(roleEntity);
+    public ResponseEntity<?> update(@Valid @NotConflictRole @RequestBody RoleEntity roleEntity) {
+        service.save(roleEntity);
         return ResponseEntity.ok().build();
     }
 

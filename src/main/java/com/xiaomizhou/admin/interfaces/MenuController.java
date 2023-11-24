@@ -1,8 +1,9 @@
 package com.xiaomizhou.admin.interfaces;
 
-import com.xiaomizhou.admin.domain.permission.PermissionEntity;
-import com.xiaomizhou.admin.application.ApiService;
-import com.xiaomizhou.admin.interfaces.vo.ApiQueryVo;
+import com.xiaomizhou.admin.domain.menu.MenuEntity;
+import com.xiaomizhou.admin.application.MenuService;
+import com.xiaomizhou.admin.domain.menu.validation.NotConflictMenu;
+import com.xiaomizhou.admin.domain.menu.validation.UniqueMenu;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,27 +26,33 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/apis")
+@RequestMapping("/permissions")
 @RequiredArgsConstructor
-public class ApiController {
+public class MenuController {
 
-    private final ApiService service;
+    private final MenuService service;
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<PermissionEntity>> list(ApiQueryVo query,
-                                                       @Parameter(hidden = true) Pageable pageable) {
-        return ResponseEntity.ok(service.list(query, pageable));
+    public ResponseEntity<Page<MenuEntity>> list(MenuEntity menuEntity,
+                                                 @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(service.list(menuEntity, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PermissionEntity> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<MenuEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PutMapping
+    public ResponseEntity<?> create(@Valid @UniqueMenu @RequestBody MenuEntity menuEntity) {
+        service.save(menuEntity);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody PermissionEntity permissionEntity) {
-        service.save(permissionEntity);
+    public ResponseEntity<?> update(@Valid @NotConflictMenu @RequestBody MenuEntity menuEntity) {
+        service.save(menuEntity);
         return ResponseEntity.ok().build();
     }
 
@@ -53,4 +61,5 @@ public class ApiController {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
+
 }

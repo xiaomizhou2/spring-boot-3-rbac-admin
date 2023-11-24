@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @date 2023/11/17
  */
 @Data
-@Schema(description = "用户")
+@Schema(description = "用户查询VO类")
 public class UserQueryVo implements Serializable {
     @Schema(description = "用户名")
     private String username;

@@ -37,13 +37,13 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> create(@Valid @UniqueUser @RequestBody UserEntity user) {
-        service.create(user);
+        service.save(user);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
     public ResponseEntity<?> update(@Valid @NotConflictUser @RequestBody UserEntity user) {
-        service.update(user);
+        service.save(user);
         return ResponseEntity.ok().build();
     }
 

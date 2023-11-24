@@ -45,11 +45,7 @@ public class UserService {
         return optional.get();
     }
 
-    public void create(UserEntity user) {
-        repository.save(user);
-    }
-
-    public void update(UserEntity user) {
+    public void save(UserEntity user) {
         repository.save(user);
     }
 

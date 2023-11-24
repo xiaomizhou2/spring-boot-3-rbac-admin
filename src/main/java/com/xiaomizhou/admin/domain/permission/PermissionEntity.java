@@ -1,5 +1,6 @@
 package com.xiaomizhou.admin.domain.permission;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,10 +29,9 @@ public class PermissionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "接口编码不允许为空")
+    @NotEmpty(message = "权限编码不允许为空")
     private String code;
 
-    @NotEmpty(message = "接口描述不允许为空")
     private String name;
 
     @NotEmpty(message = "url不允许为空")

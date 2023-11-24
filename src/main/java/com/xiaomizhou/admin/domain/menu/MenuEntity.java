@@ -38,12 +38,16 @@ public class MenuEntity {
     @NotEmpty(message = "菜单名称不允许为空")
     private String title;
 
+    @NotEmpty(message = "菜单路径不允许为空")
     private String path;
 
     private String component;
 
     private String redirect;
 
+    /**
+     * 菜单类型，0：目录，1：菜单，2：按钮
+     */
     private Integer type;
 
     private String icon;
@@ -61,5 +65,5 @@ public class MenuEntity {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
-    private Set<PermissionEntity> apis;
+    private Set<PermissionEntity> permissions;
 }

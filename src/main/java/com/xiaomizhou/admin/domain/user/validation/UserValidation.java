@@ -22,8 +22,8 @@ public class UserValidation<T extends Annotation> implements ConstraintValidator
     protected Predicate<UserEntity> predicate = c -> true;
 
     @Override
-    public boolean isValid(UserEntity value, ConstraintValidatorContext context) {
-        return repository == null || predicate.test(value);
+    public boolean isValid(UserEntity entity, ConstraintValidatorContext context) {
+        return repository == null || predicate.test(entity);
     }
 
     public static class UniqueUserValidator extends UserValidation<UniqueUser> {

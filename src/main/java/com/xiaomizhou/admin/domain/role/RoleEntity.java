@@ -1,6 +1,7 @@
 package com.xiaomizhou.admin.domain.role;
 
 import com.xiaomizhou.admin.domain.menu.MenuEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,21 +31,24 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "t_role")
+@Schema(description = "角色实体类")
 public class RoleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotEmpty(message = "角色编号不允许为空")
     private String code;
+
     @NotEmpty(message = "角色名称不允许为空")
     private String name;
-    private Short status;
+
     private Short orderNo;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "t_role_permission",
+    @JoinTable(name = "t_role_menu",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
+            inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
-    private Set<MenuEntity> permissions;
+    private Set<MenuEntity> menus;
 }

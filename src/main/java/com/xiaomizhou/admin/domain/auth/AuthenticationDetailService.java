@@ -37,10 +37,10 @@ public class AuthenticationDetailService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             for (RoleEntity role : user.getRoles()) {
-                if (role.getPermissions() != null && !role.getPermissions().isEmpty()) {
-                    permissions.addAll(role.getPermissions());
+                if (role.getMenus() != null && !role.getMenus().isEmpty()) {
+                    permissions.addAll(role.getMenus());
                     for (MenuEntity permission : permissions) {
-                        authorities = permission.getApis().stream()
+                        authorities = permission.getPermissions().stream()
                                 .map(PermissionEntity::getCode)
                                 .distinct()
                                 .map(code -> new SimpleGrantedAuthority(code))

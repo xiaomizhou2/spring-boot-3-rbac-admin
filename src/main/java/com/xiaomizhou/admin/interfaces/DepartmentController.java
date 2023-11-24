@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.interfaces;
 
 import com.xiaomizhou.admin.domain.department.DepartmentEntity;
 import com.xiaomizhou.admin.application.DepartmentService;
+import com.xiaomizhou.admin.domain.department.validation.NotConflictDepartment;
+import com.xiaomizhou.admin.domain.department.validation.UniqueDepartment;
 import com.xiaomizhou.admin.interfaces.vo.DepartmentQueryVo;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +45,14 @@ public class DepartmentController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PutMapping
+    public ResponseEntity<?> create(@Valid @UniqueDepartment @RequestBody DepartmentEntity departmentEntity) {
+        service.save(departmentEntity);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody DepartmentEntity departmentEntity) {
+    public ResponseEntity<?> update(@Valid @NotConflictDepartment @RequestBody DepartmentEntity departmentEntity) {
         service.save(departmentEntity);
         return ResponseEntity.ok().build();
     }

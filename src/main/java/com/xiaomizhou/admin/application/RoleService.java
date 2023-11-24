@@ -39,11 +39,7 @@ public class RoleService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("数据不存在"));
     }
 
-    public void create(RoleEntity roleEntity) {
-        repository.save(roleEntity);
-    }
-
-    public void update(RoleEntity roleEntity) {
+    public void save(RoleEntity roleEntity) {
         repository.save(roleEntity);
     }
 
