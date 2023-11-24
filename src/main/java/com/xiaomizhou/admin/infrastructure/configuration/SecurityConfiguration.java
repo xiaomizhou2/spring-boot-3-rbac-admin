@@ -1,5 +1,6 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
+import com.xiaomizhou.admin.domain.auth.handler.AuthLogoutHandler;
 import com.xiaomizhou.admin.domain.auth.handler.LoginFailureAuthenticationHandler;
 import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationFilter;
 import com.xiaomizhou.admin.domain.auth.handler.LoginSuccessAuthenticationHandler;
@@ -42,6 +43,7 @@ public class SecurityConfiguration {
     private final LoginSuccessAuthenticationHandler loginSuccessAuthenticationHandler;
     private final LoginFailureAuthenticationHandler loginFailureAuthenticationHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthLogoutHandler authLogoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,11 +55,12 @@ public class SecurityConfiguration {
                 //设置session永远不会创建
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
+                // 增加jwt权限过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin(login -> {
-                    login.successHandler(loginSuccessAuthenticationHandler);
-                    login.failureHandler(loginFailureAuthenticationHandler);
-                });
+                // 通过表单登录，增加登录成功处理器、登录失败处理器
+                .formLogin(login -> login.successHandler(loginSuccessAuthenticationHandler).failureHandler(loginFailureAuthenticationHandler))
+                // 退出登录
+                .logout(logout -> logout.logoutUrl("/logout").addLogoutHandler(authLogoutHandler));
 
         return http.build();
     }

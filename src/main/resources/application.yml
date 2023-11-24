@@ -2,17 +2,28 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:mysql://127.0.0.1/db-xiaomizhou-admin
-    username: root
-    password: 123456
   jpa:
     database: postgresql
     hibernate:
       ddl-auto: update
     show-sql: true
-
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      time-to-live: 300000
+      key-prefix: xiaomizhou-
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://82.157.166.179/xiaomizhou-admin-dev
+    username: postgres
+    password: xmz@2023
+  data:
+    redis:
+      host: 82.157.166.179
+      port: 6379
+      password: 521jx123@gmail.com
+      database: 0
   security:
     jwt:
       secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
