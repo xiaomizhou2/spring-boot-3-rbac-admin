@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/api/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
 

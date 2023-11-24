@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/permissions")
+@RequestMapping("/api/menus")
 @RequiredArgsConstructor
 public class MenuController {
 

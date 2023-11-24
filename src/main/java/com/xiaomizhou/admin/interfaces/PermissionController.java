@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2023/11/4
  */
 @RestController
-@RequestMapping("/apis")
+@RequestMapping("/api/permissions")
 @RequiredArgsConstructor
 public class PermissionController {
 
