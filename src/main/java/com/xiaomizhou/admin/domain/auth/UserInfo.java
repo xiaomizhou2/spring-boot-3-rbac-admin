@@ -1,6 +1,6 @@
 package com.xiaomizhou.admin.domain.auth;
 
-import com.xiaomizhou.admin.domain.permission.PermissionEntity;
+import com.xiaomizhou.admin.domain.menu.MenuEntity;
 import com.xiaomizhou.admin.domain.user.UserEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,9 +23,9 @@ public class UserInfo extends UserEntity implements UserDetails, Serializable {
 
     private Collection<GrantedAuthority> authorities;
 
-    private Set<PermissionEntity> permissions;
+    private Set<MenuEntity> permissions;
 
-    public UserInfo(UserEntity user, Collection<GrantedAuthority> authorities, Set<PermissionEntity> permissions) {
+    public UserInfo(UserEntity user, Collection<GrantedAuthority> authorities, Set<MenuEntity> permissions) {
         BeanUtils.copyProperties(user, this);
         this.authorities = authorities;
         this.permissions = permissions;

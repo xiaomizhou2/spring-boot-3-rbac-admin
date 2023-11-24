@@ -1,24 +1,16 @@
 package com.xiaomizhou.admin.domain.permission;
 
-import com.xiaomizhou.admin.domain.api.ApiEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 /**
  * @author xiaomizhou
@@ -35,31 +27,18 @@ public class PermissionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotEmpty(message = "权限名称不允许为空")
-    private String title;
 
-    private String path;
+    @NotEmpty(message = "接口编码不允许为空")
+    private String code;
 
-    private String component;
+    @NotEmpty(message = "接口描述不允许为空")
+    private String name;
 
-    private String redirect;
+    @NotEmpty(message = "url不允许为空")
+    private String url;
 
-    private Integer type;
-
-    private String icon;
-
-    private String meta;
+    @NotBlank(message = "请求方式不允许为空")
+    private String method;
 
     private Short orderNo;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id")
-    private PermissionEntity parent;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "t_permission_api",
-            joinColumns = @JoinColumn(name = "permission_id"),
-            inverseJoinColumns = @JoinColumn(name = "api_id")
-    )
-    private Set<ApiEntity> apis;
 }

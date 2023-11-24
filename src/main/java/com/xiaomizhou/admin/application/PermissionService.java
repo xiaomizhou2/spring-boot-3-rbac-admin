@@ -1,7 +1,7 @@
 package com.xiaomizhou.admin.application;
 
-import com.xiaomizhou.admin.domain.permission.PermissionEntity;
-import com.xiaomizhou.admin.domain.permission.PermissionRepository;
+import com.xiaomizhou.admin.domain.menu.MenuEntity;
+import com.xiaomizhou.admin.domain.menu.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,19 +17,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PermissionService {
 
-    private final PermissionRepository repository;
+    private final MenuRepository repository;
 
-    public Page<PermissionEntity> list(PermissionEntity permissionEntity, Pageable pageable) {
-        Example<PermissionEntity> example = Example.of(permissionEntity);
+    public Page<MenuEntity> list(MenuEntity menuEntity, Pageable pageable) {
+        Example<MenuEntity> example = Example.of(menuEntity);
         return repository.findAll(example, pageable);
     }
 
-    public PermissionEntity findById(Integer id) {
+    public MenuEntity findById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("数据不存在"));
     }
 
-    public void save(PermissionEntity permissionEntity) {
-        repository.save(permissionEntity);
+    public void save(MenuEntity menuEntity) {
+        repository.save(menuEntity);
     }
 
     public void delete(Integer id) {

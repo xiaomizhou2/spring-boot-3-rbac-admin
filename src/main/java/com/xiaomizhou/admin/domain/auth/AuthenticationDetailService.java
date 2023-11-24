@@ -1,7 +1,7 @@
 package com.xiaomizhou.admin.domain.auth;
 
-import com.xiaomizhou.admin.domain.api.ApiEntity;
 import com.xiaomizhou.admin.domain.permission.PermissionEntity;
+import com.xiaomizhou.admin.domain.menu.MenuEntity;
 import com.xiaomizhou.admin.domain.role.RoleEntity;
 import com.xiaomizhou.admin.domain.user.UserEntity;
 import com.xiaomizhou.admin.domain.user.UserRepository;
@@ -33,15 +33,15 @@ public class AuthenticationDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("用户" + username + "不存在"));
-        Set<PermissionEntity> permissions = new HashSet<>();
+        Set<MenuEntity> permissions = new HashSet<>();
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             for (RoleEntity role : user.getRoles()) {
                 if (role.getPermissions() != null && !role.getPermissions().isEmpty()) {
                     permissions.addAll(role.getPermissions());
-                    for (PermissionEntity permission : permissions) {
+                    for (MenuEntity permission : permissions) {
                         authorities = permission.getApis().stream()
-                                .map(ApiEntity::getCode)
+                                .map(PermissionEntity::getCode)
                                 .distinct()
                                 .map(code -> new SimpleGrantedAuthority(code))
                                 .collect(Collectors.toList());

@@ -1,6 +1,6 @@
 package com.xiaomizhou.admin.interfaces;
 
-import com.xiaomizhou.admin.domain.api.ApiEntity;
+import com.xiaomizhou.admin.domain.permission.PermissionEntity;
 import com.xiaomizhou.admin.application.ApiService;
 import com.xiaomizhou.admin.interfaces.vo.ApiQueryVo;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,19 +32,19 @@ public class ApiController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<ApiEntity>> list(ApiQueryVo query,
-                                                @Parameter(hidden = true) Pageable pageable) {
+    public ResponseEntity<Page<PermissionEntity>> list(ApiQueryVo query,
+                                                       @Parameter(hidden = true) Pageable pageable) {
         return ResponseEntity.ok(service.list(query, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiEntity> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<PermissionEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody ApiEntity apiEntity) {
-        service.save(apiEntity);
+    public ResponseEntity<?> save(@Valid @RequestBody PermissionEntity permissionEntity) {
+        service.save(permissionEntity);
         return ResponseEntity.ok().build();
     }
 

@@ -1,4 +1,4 @@
-package com.xiaomizhou.admin.domain.api;
+package com.xiaomizhou.admin.domain.menu;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2023/10/27
  * @email 521jx123@gmail.com
  */
-public interface ApiRepository extends JpaRepository<ApiEntity, Integer> {
+public interface MenuRepository extends JpaRepository<MenuEntity, Integer> {
 }

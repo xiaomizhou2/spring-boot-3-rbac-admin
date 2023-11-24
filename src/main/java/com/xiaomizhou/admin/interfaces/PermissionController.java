@@ -1,6 +1,6 @@
 package com.xiaomizhou.admin.interfaces;
 
-import com.xiaomizhou.admin.domain.permission.PermissionEntity;
+import com.xiaomizhou.admin.domain.menu.MenuEntity;
 import com.xiaomizhou.admin.application.PermissionService;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -31,19 +31,19 @@ public class PermissionController {
 
     @GetMapping
     @PageableAsQueryParam
-    public ResponseEntity<Page<PermissionEntity>> list(PermissionEntity permissionEntity,
-                                                       @Parameter(hidden = true) Pageable pageable) {
-        return ResponseEntity.ok(service.list(permissionEntity, pageable));
+    public ResponseEntity<Page<MenuEntity>> list(MenuEntity menuEntity,
+                                                 @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(service.list(menuEntity, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PermissionEntity> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<MenuEntity> findById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody PermissionEntity permissionEntity) {
-        service.save(permissionEntity);
+    public ResponseEntity<?> save(@Valid @RequestBody MenuEntity menuEntity) {
+        service.save(menuEntity);
         return ResponseEntity.ok().build();
     }
 
