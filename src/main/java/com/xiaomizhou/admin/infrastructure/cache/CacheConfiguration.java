@@ -1,6 +1,9 @@
 package com.xiaomizhou.admin.infrastructure.cache;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -25,8 +28,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
  * @email 521jx123@gmail.com
  * @date 2023/11/21
  */
-//@Configuration
-//@EnableCaching
+@Configuration
+@EnableCaching
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
 
@@ -39,9 +42,17 @@ public class CacheConfiguration {
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisFactory, CacheProperties cacheProperties) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        //将类名称序列化到json串中，去掉会导致得出来的的是LinkedHashMap对象，直接转换实体对象会失败
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        //设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         redisCacheConfiguration = redisCacheConfiguration
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                .serializeValuesWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)));
         CacheProperties.Redis redisProperties = cacheProperties.getRedis();
         redisCacheConfiguration = redisCacheConfiguration.entryTtl(redisProperties.getTimeToLive());
         redisCacheConfiguration = redisCacheConfiguration.prefixCacheNameWith(redisProperties.getKeyPrefix());
