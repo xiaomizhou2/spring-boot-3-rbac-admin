@@ -50,6 +50,23 @@ public class JwtAuthenticationService {
     }
 
     /**
+     * 刷新token
+     *
+     * @param username
+     * @param refreshToken
+     * @return 刷新token
+     */
+    public AuthenticationResponse refreshToken(String username, String refreshToken) {
+        TokenEntity entity = repository.findTokenEntityByRefreshToken(refreshToken);
+        String token = jwtRepository.generateToken(username);
+        this.updateAccessToken(token, entity);
+        return AuthenticationResponse.builder()
+                .accessToken(token)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    /**
      * 提取相应的内容
      *
      * @param token
@@ -76,6 +93,14 @@ public class JwtAuthenticationService {
                 .refreshTokenExpires(refreshTokenExpires)
                 .build();
         repository.save(authentication);
+    }
+
+    private void updateAccessToken(String accessToken, TokenEntity entity) {
+        Date accessTokenIssued = jwtRepository.extractClaim(accessToken, Claims::getIssuedAt);
+        Date accessTokenExpires = jwtRepository.extractClaim(accessToken, Claims::getExpiration);
+        entity.setAccessTokenIssued(accessTokenIssued);
+        entity.setAccessTokenExpires(accessTokenExpires);
+        repository.save(entity);
     }
 
 }

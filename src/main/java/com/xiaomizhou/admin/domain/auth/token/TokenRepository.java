@@ -14,4 +14,6 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Integer> {
     int countAllByPrincipalName(String principalName);
 
     TokenEntity findAuthenticationEntityByAccessToken(String accessToken);
+
+    TokenEntity findTokenEntityByRefreshToken(String refreshToken);
 }
