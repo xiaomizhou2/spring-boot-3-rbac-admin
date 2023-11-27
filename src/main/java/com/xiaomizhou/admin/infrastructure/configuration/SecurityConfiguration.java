@@ -1,5 +1,6 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
+import com.xiaomizhou.admin.domain.auth.RefreshTokenFilter;
 import com.xiaomizhou.admin.domain.auth.handler.AuthLogoutHandler;
 import com.xiaomizhou.admin.domain.auth.handler.LoginFailureAuthenticationHandler;
 import com.xiaomizhou.admin.domain.auth.jwt.JwtAuthenticationFilter;
@@ -44,6 +45,7 @@ public class SecurityConfiguration {
     private final LoginFailureAuthenticationHandler loginFailureAuthenticationHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthLogoutHandler authLogoutHandler;
+    private final RefreshTokenFilter refreshTokenFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -57,6 +59,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 // 增加jwt权限过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(refreshTokenFilter, JwtAuthenticationFilter.class)
                 // 通过表单登录，增加登录成功处理器、登录失败处理器
                 .formLogin(login -> login.successHandler(loginSuccessAuthenticationHandler).failureHandler(loginFailureAuthenticationHandler))
                 // 退出登录

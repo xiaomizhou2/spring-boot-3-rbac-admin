@@ -1,5 +1,10 @@
 package com.xiaomizhou.admin.infrastructure.cache;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -15,15 +20,13 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author zhangyaxi
  * @email 521jx123@gmail.com
  * @date 2023/11/21
  */
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
 
@@ -37,7 +40,8 @@ public class CacheConfiguration {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisFactory, CacheProperties cacheProperties) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
-        redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+        redisCacheConfiguration = redisCacheConfiguration
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
         CacheProperties.Redis redisProperties = cacheProperties.getRedis();
         redisCacheConfiguration = redisCacheConfiguration.entryTtl(redisProperties.getTimeToLive());
         redisCacheConfiguration = redisCacheConfiguration.prefixCacheNameWith(redisProperties.getKeyPrefix());

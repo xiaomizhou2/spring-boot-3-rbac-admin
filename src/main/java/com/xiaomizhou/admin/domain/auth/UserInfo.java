@@ -2,6 +2,8 @@ package com.xiaomizhou.admin.domain.auth;
 
 import com.xiaomizhou.admin.domain.menu.MenuEntity;
 import com.xiaomizhou.admin.domain.user.UserEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,10 @@ public class UserInfo extends UserEntity implements UserDetails, Serializable {
     private Collection<GrantedAuthority> authorities;
 
     private Set<MenuEntity> permissions;
+
+    public UserInfo() {
+
+    }
 
     public UserInfo(UserEntity user, Collection<GrantedAuthority> authorities, Set<MenuEntity> permissions) {
         BeanUtils.copyProperties(user, this);
