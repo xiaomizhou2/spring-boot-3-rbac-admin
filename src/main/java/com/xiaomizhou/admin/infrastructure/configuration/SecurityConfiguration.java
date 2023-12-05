@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -61,7 +62,11 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(refreshTokenFilter, JwtAuthenticationFilter.class)
                 // 通过表单登录，增加登录成功处理器、登录失败处理器
-                .formLogin(login -> login.successHandler(loginSuccessAuthenticationHandler).failureHandler(loginFailureAuthenticationHandler))
+                .formLogin(login ->
+                    login.successHandler(loginSuccessAuthenticationHandler)
+                        .failureHandler(loginFailureAuthenticationHandler)
+                        .loginProcessingUrl("/login")
+                )
                 // 退出登录
                 .logout(logout -> logout.logoutUrl("/logout").addLogoutHandler(authLogoutHandler));
 

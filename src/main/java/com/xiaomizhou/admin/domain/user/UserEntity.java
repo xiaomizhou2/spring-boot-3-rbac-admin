@@ -46,7 +46,7 @@ public class UserEntity implements Serializable {
     @NotEmpty(message = "用户名不允许为空")
     private String username;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(updatable = false)
     private String password;
 
@@ -66,7 +66,7 @@ public class UserEntity implements Serializable {
     @JoinColumn(name = "dept_id")
     private DepartmentEntity department;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "t_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")

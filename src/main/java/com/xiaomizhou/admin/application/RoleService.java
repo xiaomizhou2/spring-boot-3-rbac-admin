@@ -9,6 +9,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author zhangyaxi
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2023/11/4
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RoleService {
 

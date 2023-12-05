@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,10 +46,10 @@ public class RoleEntity implements Serializable {
 
     private Short orderNo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "t_role_menu",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
-    private Set<MenuEntity> menus;
+    private List<MenuEntity> menus;
 }

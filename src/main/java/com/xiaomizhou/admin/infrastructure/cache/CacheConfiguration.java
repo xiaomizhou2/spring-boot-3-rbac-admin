@@ -28,9 +28,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
  * @email 521jx123@gmail.com
  * @date 2023/11/21
  */
-@Configuration
-@EnableCaching
-@EnableConfigurationProperties(CacheProperties.class)
+//@Configuration
+//@EnableCaching
+//@EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
 
     /**
@@ -40,7 +40,7 @@ public class CacheConfiguration {
      * @param cacheProperties
      * @return
      */
-    @Bean
+    //@Bean
     public CacheManager cacheManager(RedisConnectionFactory redisFactory, CacheProperties cacheProperties) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);

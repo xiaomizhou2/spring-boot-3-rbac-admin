@@ -33,23 +33,23 @@ public class AuthenticationDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("用户" + username + "不存在"));
-        Set<MenuEntity> permissions = new HashSet<>();
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             for (RoleEntity role : user.getRoles()) {
                 if (role.getMenus() != null && !role.getMenus().isEmpty()) {
-                    permissions.addAll(role.getMenus());
-                    for (MenuEntity permission : permissions) {
-                        authorities = permission.getPermissions().stream()
+                    for (MenuEntity menu : role.getMenus()) {
+                        authorities.addAll(menu.getPermissions().stream()
                                 .map(PermissionEntity::getCode)
                                 .distinct()
                                 .map(code -> new SimpleGrantedAuthority(code))
-                                .collect(Collectors.toList());
+                                .collect(Collectors.toList()));
                     }
                 }
             }
         }
-        UserInfo userInfo = new UserInfo(user, authorities, permissions);
+        UserInfo userInfo = new UserInfo();
+        userInfo.user(user);
+        userInfo.authorities(authorities);
         return userInfo;
     }
 }

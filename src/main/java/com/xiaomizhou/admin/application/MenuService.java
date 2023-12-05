@@ -2,11 +2,15 @@ package com.xiaomizhou.admin.application;
 
 import com.xiaomizhou.admin.domain.menu.MenuEntity;
 import com.xiaomizhou.admin.domain.menu.MenuRepository;
+import com.xiaomizhou.admin.domain.role.RoleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author zhangyaxi
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @date 2023/11/4
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MenuService {
 
