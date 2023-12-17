@@ -1,11 +1,13 @@
 package com.xiaomizhou.admin.domain.auth.handler;
 
+import com.xiaomizhou.admin.domain.auth.exception.CaptchaValidateException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -31,6 +33,10 @@ public class LoginFailureAuthenticationHandler implements AuthenticationFailureH
         log.error("登录失败，失败原因:{}", e.getMessage());
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
         httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+        if (e instanceof CaptchaValidateException exception) {
+            mappingJackson2HttpMessageConverter.write(exception.getMessage(), MediaType.APPLICATION_JSON, httpResponse);
+            return;
+        }
         mappingJackson2HttpMessageConverter.write(e.getMessage(), MediaType.APPLICATION_JSON, httpResponse);
     }
 }

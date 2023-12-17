@@ -1,5 +1,6 @@
 package com.xiaomizhou.admin.infrastructure.configuration;
 
+import com.xiaomizhou.admin.domain.auth.CaptchaValidateFilter;
 import com.xiaomizhou.admin.domain.auth.RefreshTokenFilter;
 import com.xiaomizhou.admin.domain.auth.handler.AuthLogoutHandler;
 import com.xiaomizhou.admin.domain.auth.handler.LoginFailureAuthenticationHandler;
@@ -38,7 +39,9 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/error"
+            "/error",
+            "/captcha.jpg",
+            "/login"
     };
 
     private final AuthenticationProvider authenticationProvider;
@@ -47,6 +50,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthLogoutHandler authLogoutHandler;
     private final RefreshTokenFilter refreshTokenFilter;
+    private final CaptchaValidateFilter captchaValidateFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -61,6 +65,7 @@ public class SecurityConfiguration {
                 // 增加jwt权限过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(refreshTokenFilter, JwtAuthenticationFilter.class)
+                .addFilterBefore(captchaValidateFilter, RefreshTokenFilter.class)
                 // 通过表单登录，增加登录成功处理器、登录失败处理器
                 .formLogin(login ->
                     login.successHandler(loginSuccessAuthenticationHandler)
